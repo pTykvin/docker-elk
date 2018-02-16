@@ -42,6 +42,20 @@ services:
       - elk
     depends_on:
       - elasticsearch
+  
+  filebeat:
+    build:
+      context: filebeat/
+    volumes:
+      - ./filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - ./filebeat/prospectors.d:/usr/share/filebeat/prospectors.d:ro
+      - /home/happyfat/Work/projects/station/gate-tcs/log:/mnt/log
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+      - logstash
+      - kibana
 
 networks:
 
